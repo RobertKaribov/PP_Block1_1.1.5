@@ -5,7 +5,6 @@ import jm.task.core.jdbc.util.Util;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-
 import javax.persistence.Query;
 import java.util.List;
 
@@ -19,14 +18,11 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            String sql = "CREATE TABLE IF NOT EXISTS User (id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), lastName VARCHAR(50), age TINYINT)";
+            String sql = "CREATE TABLE IF NOT EXISTS users (id BIGINT PRIMARY KEY AUTO_INCREMENT, name VARCHAR(50), lastName VARCHAR(50), age TINYINT)";
             Query query = session.createSQLQuery(sql);
             query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
@@ -36,14 +32,11 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            String sql = "DROP TABLE IF EXISTS User";
+            String sql = "DROP TABLE IF EXISTS users";
             Query query = session.createSQLQuery(sql);
             query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
@@ -97,14 +90,11 @@ public class UserDaoHibernateImpl implements UserDao {
         Transaction transaction = null;
         try (Session session = util.getSessionFactory().openSession()) {
             transaction = session.beginTransaction();
-            String sql = "TRUNCATE TABLE User";
+            String sql = "TRUNCATE TABLE users";
             Query query = session.createSQLQuery(sql);
             query.executeUpdate();
             transaction.commit();
         } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
             e.printStackTrace();
         }
     }
